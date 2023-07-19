@@ -8,7 +8,7 @@ build:
   variables:
     "_EXPERIMENTAL_DAGGER_RUNNER_HOST": "kube-pod://buildkitd-6f9bbc8677-f7jlt"
   script:
-  - oc login $TOKEN
+  - oc login --token=$TOKEN --server=https://api.ocp-staging.cloudscale.puzzle.ch:6443
   - oc project pitc-buildkit-test
   - oc get pods
   - printenv
