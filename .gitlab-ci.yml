@@ -9,6 +9,7 @@ build:
     - buildkit-test
   variables:
     "_EXPERIMENTAL_DAGGER_RUNNER_HOST": "unix:///var/run/dagger/buildkitd.sock"
+    "_EXPERIMENTAL_DAGGER_CACHE_CONFIG": "type=registry,ref=registry.pitc-buildkit-test.svc.cluster.local/myrepo:buildcache,mode=max"
   script:
   - printenv
   - dagger run go run ci/main.go
