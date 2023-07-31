@@ -5,12 +5,12 @@ stages:
 build:
   stage: build
   image: ttl.sh/dagger-go-oc:latest
+  tags:
+    - buildkit-test
   variables:
-    "_EXPERIMENTAL_DAGGER_RUNNER_HOST": "kube-pod://buildkitd-6f9bbc8677-f7jlt"
+    "_EXPERIMENTAL_DAGGER_RUNNER_HOST": "unix:///var/run/dagger/buildkitd.sock"
   script:
-  - oc login --token=$TOKEN --server=https://api.ocp-staging.cloudscale.puzzle.ch:6443
-  - oc project pitc-buildkit-test
-  - oc get pods
   - printenv
+  - sleep 1000
   - dagger run go run ci/main.go
   - echo "Yallah!"
