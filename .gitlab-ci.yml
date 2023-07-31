@@ -11,6 +11,5 @@ build:
     "_EXPERIMENTAL_DAGGER_RUNNER_HOST": "unix:///var/run/dagger/buildkitd.sock"
   script:
   - printenv
-  - sleep 1000
   - dagger run go run ci/main.go
   - echo "Yallah!"
