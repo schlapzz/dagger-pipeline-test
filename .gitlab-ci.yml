@@ -4,12 +4,14 @@ stages:
 
 build:
   stage: build
-  image: ttl.sh/dagger-go-oc:latest
+  image: registry.puzzle.ch/cicd/dagger-golang:latest
   tags:
     - buildkit-test
   variables:
     "_EXPERIMENTAL_DAGGER_RUNNER_HOST": "unix:///var/run/dagger/buildkitd.sock"
     "_EXPERIMENTAL_DAGGER_CACHE_CONFIG": "type=registry,ref=registry.pitc-buildkit-test.svc.cluster.local/myrepo:buildcache,mode=max"
+    "OTEL_RESOURCE_ATTRIBUTES": "commit=${CI_COMMIT_SHA},group=${CI_PROJECT_NAMESPACE},project=${CI_PROJECT_NAME},job=${CI_JOB_ID},pipeline=${CI_PIPELINE_ID}"
+    "OTEL_EXPORTER_JAEGER_ENDPOINT": jaeger-all-in-one-inmemory-collector:14268/api/traces
   script:
   - printenv
   - dagger run go run ci/main.go
