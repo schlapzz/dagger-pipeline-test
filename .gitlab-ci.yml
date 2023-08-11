@@ -4,6 +4,7 @@ stages:
 variables:
   KUBERNETES_POD_LABELS_1: "project=${CI_PROJECT_NAME}"
   KUBERNETES_POD_LABELS_2: "project-id=${CI_PROJECT_ID}"
+  KUBERNETES_POD_LABELS_3: "job-id=${CI_JOB_ID}"
 
 build:
   stage: build
