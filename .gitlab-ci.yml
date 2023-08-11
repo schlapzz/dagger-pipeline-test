@@ -32,8 +32,6 @@ build_local:
     - buildkit-test
   variables:
     "_EXPERIMENTAL_DAGGER_RUNNER_HOST": "unix:///var/run/dagger/buildkitd.sock"
-    "OTEL_RESOURCE_ATTRIBUTES": "commit=${CI_COMMIT_SHA},group=${CI_PROJECT_NAMESPACE},project=${CI_PROJECT_NAME},job=${CI_JOB_ID},pipeline=${CI_PIPELINE_ID}"
-    "OTEL_EXPORTER_JAEGER_ENDPOINT": http://tempo.pitc-buildkit-test.svc.cluster.local:14268/api/traces
   script:
   - date
   - printenv
