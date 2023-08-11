@@ -20,10 +20,10 @@ func main() {
 	// get host directory
 	project := client.Host().Directory(".")
 
-	goMod := daggerClient.CacheVolume("go")
-	goChache := daggerClient.CacheVolume("go-cache")
+	goMod := client.CacheVolume("go")
+	goChache := client.CacheVolume("go-cache")
 
-	builder := daggerClient.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
+	builder := client.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
 		From("golang:1.20").
 		WithMountedCache("/go/src", goMod).
 		WithMountedCache("/root/.cache/go-build", goChache).
