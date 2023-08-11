@@ -17,5 +17,6 @@ build:
     "OTEL_EXPORTER_JAEGER_ENDPOINT": http://tempo.pitc-buildkit-test.svc.cluster.local:14268/api/traces
   script:
   - printenv
+  - dagger version
   - dagger run go run ci/main.go
   - echo "Yallah!"
