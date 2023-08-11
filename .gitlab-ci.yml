@@ -20,6 +20,7 @@ build:
   - date
   - printenv
   - dagger version
+  - sleep 10m
   - date
   - dagger run go run ci/main.go
   - echo "Yallah!"
