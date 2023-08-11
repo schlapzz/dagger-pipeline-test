@@ -27,12 +27,12 @@ func main() {
 		WithDirectory("/src", project).
 		WithWorkdir("/src").
 		WithEnvVariable("CGO_ENABLED", "0").
-		WithExec([]string{"go", "build", "-o", "myapp"})
+		WithExec([]string{"go", "build", "-o", "myapp1"})
 
 	// publish binary on alpine base
 	prodImage := client.Container().
 		From("alpine").
-		WithFile("/bin/myapp", builder.File("/src/myapp")).
+		WithFile("/bin/myapp", builder.File("/src/myapp1")).
 		WithEntrypoint([]string{"/bin/myapp"})
 
 	addr, err := prodImage.Publish(ctx, "ttl.sh/soaisbvj:5m")
