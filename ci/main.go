@@ -18,20 +18,32 @@ func main() {
 	defer client.Close()
 
 	// get host directory
-	project := client.Host().Directory(".")
-
 	goMod := client.CacheVolume("go")
 	goChache := client.CacheVolume("go-cache")
 
-	builder := client.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
+	base := client.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
 		From("golang:1.20").
 		WithMountedCache("/go/src", goMod).
 		WithMountedCache("/root/.cache/go-build", goChache).
-		WithDirectory("/src", project).
-		WithWorkdir("/src").
+		WithWorkdir("/src")
+
+	// get working directory on host
+	modDir := client.Host().Directory(".", dagger.HostDirectoryOpts{
+		Include: []string{"go.mod", "go.sum"},
+	})
+
+	//download go modules
+	builder := base.WithDirectory("/src", modDir).
+		WithExec([]string{"go", "mod", "download"})
+
+		//get working directory on host, load files, exclude build and ci directory
+	source := client.Host().Directory(".", dagger.HostDirectoryOpts{
+		Exclude: []string{"ci/", "build/"},
+	})
+
+	builder = builder.WithDirectory("/src", source).
 		WithEnvVariable("CGO_ENABLED", "0").
 		WithExec([]string{"go", "build", "-o", "myapp1"})
-
 	// publish binary on alpine base
 	prodImage := client.Container().
 		From("alpine").
