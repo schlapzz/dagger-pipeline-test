@@ -23,6 +23,7 @@ func main() {
 	// build app
 	builder := client.Container().
 		From("golang:latest").
+		WithEnvVariable("A", "B").
 		WithDirectory("/src", project).
 		WithWorkdir("/src").
 		WithEnvVariable("CGO_ENABLED", "0").
