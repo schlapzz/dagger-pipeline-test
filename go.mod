@@ -2,7 +2,7 @@ module dagger-pipeline
 
 go 1.20
 
-require dagger.io/dagger v0.7.3
+require dagger.io/dagger v0.8.2
 
 require (
 	github.com/99designs/gqlgen v0.17.31 // indirect
